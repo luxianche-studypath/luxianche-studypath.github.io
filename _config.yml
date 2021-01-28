@@ -1,9 +1,9 @@
-title: Hacker-Blog
-description: "A Jekyll Blog Theme For Hackers"
+title: luxianche's blog
+description: "notes,passage,projects by luxianche"
 author:
-  name: "SomeHacker"
-  email: "someone@somewebsite.somedomain"
-  url: "https://ashishchaudhary.in/hacker-blog"
+  name: "Lu Xianche"
+  email: "luxianche9@gmail.com"
+  url: "luxianche"
 
 baseurl: /
 
