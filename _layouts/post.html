@@ -3,8 +3,21 @@ layout: default
 ---
 
 <article>
-  <h2>{{ page.title }}</h2>
   
+  <h2>{{ page.title }}</h2>
+  <!--categoty-->
+  <div class="post-categories">
+    {% if post %}
+    {% assign categories = post.categories %}
+    {% else %}
+    {% assign categories = page.categories %}
+    {% endif %}
+    {% for category in categories %}
+    <a href="{{site.baseurl}}/categories.html">{{category}}</a>
+    {% unless forloop.last %}&nbsp;{% endunless %}
+    {% endfor %}
+  </div>
+
   <!--toc function-->
   {% include toc.html html=content %}
   
