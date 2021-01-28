@@ -1,9 +1,6 @@
 ---
-layout: post
-title: "git pro"
-date: 2021-1-28 13:06:00 +0800
-categories: blog
-tag: git
+title: Git Pro
+published: true
 ---
 # Pro Git
 
@@ -19,7 +16,7 @@ tag: git
 
   快照的实现:把文件系统分成块,使用写时拷贝COW或写时重定向ROW把更改的数据块被分到快照卷中或把原数据备份到快照卷,创建映射表
 
-  ![](D:\图片\snapshots.png)
+  ![](https://git-scm.com/book/en/v2/images/snapshots.png)
 
 + 再本地中执行操作
 
@@ -53,19 +50,19 @@ sudo apt-get install git-all
 
 + 配置文件存储位置:
 
-  1. ==/etc/gitconfig==:系统中所有用户
+  1. `/etc/gitconfig`:系统中所有用户
 
      ```bash
      git config --system ...
      ```
 
-  2. ==~/.gitconfit==或==~/.config/git/config==:针对个人(覆盖上级)
+  2. `~/.gitconfit`或`~/.config/git/config`:针对个人(覆盖上级)
 
      ```bash
      git config --global ...
      ```
 
-  3. ==.git/config==:针对当前仓库(覆盖上级)
+  3. `.git/config`:针对当前仓库(覆盖上级)
 
      ```bash
      git config ...
@@ -95,7 +92,7 @@ sudo apt-get install git-all
 
 + 获取git仓库
 
-  1. 创建新的仓库(创建==.git==文件)
+  1. 创建新的仓库(创建.git文件)
 
      ```bash
      git init
@@ -112,7 +109,7 @@ sudo apt-get install git-all
 
 + 再git仓库中记录更改
 
-  ![](D:\图片\lifecycle.png)
+  ![](https://git-scm.com/book/en/v2/images/lifecycle.png)
 
   1. 查看文件状态
 
@@ -132,7 +129,7 @@ sudo apt-get install git-all
 
   3. 忽略文件
 
-     创建文件==.gitignore==
+     创建文件`.gitignore`o
 
      嵌套`.gitignore`文件中的规则仅适用于它们所在目录下的文件
 
@@ -318,15 +315,15 @@ git chechout -- <file> #检出上次提交中的文件覆盖已做更改的文�
 ​	分支简介
 ​	分支就是一个只向提交的指针,根据提交的父对象生成提交链
 
-<img src="D:\图片\commit-and-tree.png"  />
+<img src="https://git-scm.com/book/en/v2/images/commit-and-tree.png"  />
 
-<img src="D:\图片\commits-and-parents.png"  />
+<img src="https://git-scm.com/book/en/v2/images/commits-and-parents.png"  />
 
  1. 创建新的分支
 
     创建一个新的指针指向当前提交, 因此git分支高效快速
 
-    其中git维护的==HEAD==指针指向当前所在的本地指针的分支
+    其中git维护的HEAD指针指向当前所在的本地指针的分支
 
     ```bash
     git branch [branch-name] #在HEAD指针指向提交创建分支
@@ -343,7 +340,7 @@ git chechout -- <file> #检出上次提交中的文件覆盖已做更改的文�
 
  2. 切换分支
 
-    切换分支即改变==HEAD==指针指向的位置, 使其指向新的分支
+    切换分支即改变HEAD指针指向的位置, 使其指向新的分支
 
     继续提交会形成分支
 
@@ -398,7 +395,7 @@ git chechout -- <file> #检出上次提交中的文件覆盖已做更改的文�
       no changes added to commit (use "git add" and/or "git commit -a")
       ```
 
-      ![image-20210123011252639](D:\图片\image-20210123011252639.png)
+      ![image-20210123011252639](/pictures/image-20210123011252639.png)
 
       ```bash
       rick@DESKTOP-M0096T1:~/learn_git/test_dir1$ git commit
@@ -443,7 +440,7 @@ git chechout -- <file> #检出上次提交中的文件覆盖已做更改的文�
 
 6. 远程分支
 
-   表达形式:==[remote-name]/[branch}==
+   表达形式:[remote-name]/[branch}
 
    git远程仓库指令
 
@@ -494,7 +491,7 @@ git chechout -- <file> #检出上次提交中的文件覆盖已做更改的文�
    e30eb27 Create README.md
    ```
 
-   其他人推送数据以后, ==fetch==整个远程仓库中的追踪分支的更新内容(默认为master), 与服务器同步, 更新origin/main位置
+   其他人推送数据以后, `fetch`整个远程仓库中的追踪分支的更新内容(默认为master), 与服务器同步, 更新origin/main位置
 
    ```bash
    rick@DESKTOP-M0096T1:~/learn_git/test_dir_remote1$ git fetch origin
@@ -547,7 +544,7 @@ git chechout -- <file> #检出上次提交中的文件覆盖已做更改的文�
    * e30eb27 Create README.md
    ```
 
-   ==fetch==到的分支无法直接修改, 使用merge或checkout -b创建本地的分支再进行修改
+   `fetch`到的分支无法直接修改, 使用merge或checkout -b创建本地的分支再进行修改
 
    ```bash
    rick@DESKTOP-M0096T1:~/learn_git/test_dir_remote1$ git merge teamone/main
@@ -576,7 +573,7 @@ git chechout -- <file> #检出上次提交中的文件覆盖已做更改的文�
    LICENSE  README.md  test.c  test2.c  test3.c
    ```
 
-   ==push==自己的本地工作成果到服务器中与他人分享
+   `push`自己的本地工作成果到服务器中与他人分享
 
    ```bash
    rick@DESKTOP-M0096T1:~/learn_git/test_dir_remote1$ git commit
@@ -651,17 +648,17 @@ git chechout -- <file> #检出上次提交中的文件覆盖已做更改的文�
 
    一个有趣的例子?
 
-   问题: 仅变基client分支![](D:\图片\interesting-rebase-1.png)
+   问题: 仅变基client分支![](https://git-scm.com/book/en/v2/images/interesting-rebase-1.png)
 
    ```bash
    git rebase --onto master server client
    ```
 
-   效果:![](D:\图片\interesting-rebase-3.png)
+   效果:![](https://git-scm.com/book/en/v2/images/interesting-rebase-3.png)
 
    **变基的危害**:
 
-   ==不要对已经存在于本地仓库以外的提交执行变基操作==
+   **不要对已经存在于本地仓库以外的提交执行变基操作**
 
 ## 4. Git服务器
 
@@ -683,7 +680,7 @@ sudo passwd git
 
 1. 建立裸仓库裸仓库(没有工作目录)
 
-   按照惯例,裸仓库后缀为==.git==
+   按照惯例,裸仓库后缀`.git`
 
    + 在已有仓库的基础上
 
@@ -733,7 +730,7 @@ sudo passwd git
 
   1. 生成个人的ssh密钥
 
-     用户的ssh密钥保存在==~/.ssh==
+     用户的ssh密钥保存在`~/.ssh`
 
      ```bash
      #检查密钥
@@ -809,7 +806,7 @@ sudo passwd git
 
 + 私有小型团队(集中式工作流)
 
-  ![将所有更改推回服务器后，Jessica的历史记录](https://git-scm.com/book/en/v2/images/small-team-7.png)
+  ![将所有更改推回服务器后，Jessica的历史记录](https://git-scm.com/book/en/v2/images/small-team-6.png)
 
   <img src="https://git-scm.com/book/en/v2/images/small-team-flow.png" alt="简单的多开发人员Git工作流程的一般事件顺序" style="zoom: 80%;" />
 
