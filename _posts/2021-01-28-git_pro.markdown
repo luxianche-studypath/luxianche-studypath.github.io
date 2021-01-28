@@ -395,7 +395,7 @@ git chechout -- <file> #检出上次提交中的文件覆盖已做更改的文�
       no changes added to commit (use "git add" and/or "git commit -a")
       ```
 
-
+      ![image-20210123011252639.png](https://i.loli.net/2021/01/28/zlshZuIFdDOav5e.png)
 
       ```bash
       rick@DESKTOP-M0096T1:~/learn_git/test_dir1$ git commit
