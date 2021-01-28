@@ -3,14 +3,14 @@ description: "notes,passage,projects by luxianche"
 author:
   name: "Lu Xianche"
   email: "luxianche9@gmail.com"
-  url: "luxianche"
+  url: "luxianche.tech"
 
 baseurl: /
 
 source: .
 destination: ./_site
 permalink: /:title
-paginate: 3
+paginate: 8
 paginate_path: /page/:num/
 
 defaults:
@@ -28,5 +28,5 @@ plugins:
   - jekyll-sitemap
 
 # Custom variables
-owner : "SomeHacker"
-year : "2020"
+owner : "luxiache"
+year : "2021"

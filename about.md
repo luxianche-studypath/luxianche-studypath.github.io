@@ -3,4 +3,6 @@ layout: page
 title: About
 ---
 
-Something about me.
+## email:luxianch9@qq.com
+## twitter:@ChrisBr09566661
+## github:luxianche-studypath
