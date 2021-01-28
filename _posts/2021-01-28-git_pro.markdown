@@ -1,0 +1,861 @@
+---
+layout: post
+title: "git pro"
+date: 2021-1-28 13:06:00 +0800
+categories: blog
+tag: git
+---
+# Pro Git
+
+## 1. 版本控制系统
+
+**版本控制**:按时间顺序记录某一个或一系列文件的变更,可以查看以前的特定版本
+
+**git基础**
+
++ 使用快照存储数据
+
+  快照的定义：关于指定数据集合的一个完全可用拷贝，该拷贝包括相应数据在某个时间点（拷贝开始的时间点）的映像。快照可以是其所表示的数据的一个副本，也可以是数据的一个复制品。
+
+  快照的实现:把文件系统分成块,使用写时拷贝COW或写时重定向ROW把更改的数据块被分到快照卷中或把原数据备份到快照卷,创建映射表
+
+  ![](D:\图片\snapshots.png)
+
++ 再本地中执行操作
+
++ 完整性
+
+  存储数据前执行校验和计算(SHA-1散列),使用校验和来引用对应数据
+
+  因此不可能再git不知情的情况下更改文件
+
++ 只增加数据
+
+  确保数据的安全性
+
++ 文件状态
+
+  文件状态:committed, modified, staged
+
+  git项目的主要区域
+
+  + git目录:保存项目元数据和对象数据库
+  + 工作目录:某个版本从git目录下的压缩数据库内被提取出,放置在磁盘上以供使用或修改
+  + 暂存区:再git目录中保存下次所要提交内容的相关信息
+
+**安装git**
+
+```bash
+sudo apt-get install git-all
+```
+
+**首次配置**
+
++ 配置文件存储位置:
+
+  1. ==/etc/gitconfig==:系统中所有用户
+
+     ```bash
+     git config --system ...
+     ```
+
+  2. ==~/.gitconfit==或==~/.config/git/config==:针对个人(覆盖上级)
+
+     ```bash
+     git config --global ...
+     ```
+
+  3. ==.git/config==:针对当前仓库(覆盖上级)
+
+     ```bash
+     git config ...
+     ```
+
++ 设置用户身份
+
+  ```bash
+  git config --global user.name "Lu_Xianche"
+  git config --global user.email luxianche9@gmail.com
+  ```
+
++ 个人编辑器
+
+  ```bash
+  git config --global core.editor vim
+  ```
+
++ 检查设置
+
+  ```bash
+  git config --list
+  git config <key>
+  ```
+
+## 2. git基础
+
++ 获取git仓库
+
+  1. 创建新的仓库(创建==.git==文件)
+
+     ```bash
+     git init
+     ```
+
+  2. 克隆现有的仓库
+
+     克隆仓库,创建新的文件夹,可重命名(使用name替换文件夹名称)
+
+     ```bash
+     git clone [url] [name] #name为代替项目文件夹默认名称的名称
+     		-o [name] #远程分支使用中,代替默认origin的名称
+     ```
+
++ 再git仓库中记录更改
+
+  ![](D:\图片\lifecycle.png)
+
+  1. 查看文件状态
+
+     ```bash
+     git status
+     		-s #显示更简略的提交信息
+     ```
+
+  2. 添加内容到下一次提交中
+
+     ```bash
+     git add <file>
+     ```
+
+     + 跟踪新的文件(add the file)输入为文件夹则递归地添加该目录下的所有内容
+     + 暂存已修改的文件(stage the modified file)
+
+  3. 忽略文件
+
+     创建文件==.gitignore==
+
+     嵌套`.gitignore`文件中的规则仅适用于它们所在目录下的文件
+
+     - 空行或以开头的行将`#`被忽略。
+
+     - 标准的glob模式起作用，并且将在整个工作树中递归地应用
+
+       ```bash
+       git rm log/\*.log #必须加上反斜杠(\),再使用通配符
+       ```
+
+     - 您可以使用正斜杠（`/`）开头的样式，以避免递归。
+
+     - 您可以使用正斜杠（`/`）结束模式以指定目录。
+
+     - 您可以通过以感叹号（`!`）开头来否定模式。
+
+     例案:
+
+     ```txt
+     # ignore all .a files
+     *.a
+     # but do track lib.a, even though you're ignoring .a files above
+     !lib.a
+     # only ignore the TODO file in the current directory, not subdir/TODO
+     /TODO
+     # ignore all files in any directory named build
+     build/
+     # ignore doc/notes.txt, but not doc/server/arch.txt
+     doc/*.txt
+     # ignore all .pdf files in the doc/ directory and any of its subdirectories
+     doc/**/*.pdf
+     ```
+
+     GitHub维护的gitignore参考:
+
+     ​	https://github.com/github/gitignore
+
+  4. 查看变更
+
+     已经暂存的变更
+
+     ```bash
+     git diff --staged
+     		--cached
+     ```
+
+     还未暂存的变更
+
+     ```bash
+     git diff
+     ```
+
+  5. 提交变更
+
+     打开默认编辑器添加提交信息
+
+     ```bash
+     git commit
+     		-m "committ message" #在命令行中添加提交信息
+     		-a 				    #跳过add环节,不暂存,直接提交所有文件
+     ```
+
+  6. 移除文件
+
+     ```bash
+     git rm 			 #从跟踪列表中移除,并从工作目录中移除
+     		-f 		 #移除已暂存的文件,并从工作目录中移除
+     		--cached #移除已暂存的文件,不从工作目录中移除
+     ```
+
+  7. 移动文件
+
+     ```bash
+     git mv <file_from> <file_to> #相当于mv,git rm,git add
+     ```
+  
++ 查看提交历史
+     ```bash
+     git log 					#按时间顺序列出所有的提交
+     		-p 				    #查看提交中引入的变化,相当于diff
+     		--stat 				#产看简要的统计信息
+     		--pretty=oneline 	 
+     		--oneline			#每次提交显示一行:"散列值 提交信息"
+     				short 		#sha-1 author message
+     				full 		#sha-1 author commit message
+     				fuller 		#sha-1 athr athrdt cmt cmtdt msg
+     				format:"..."
+     		--graph 			#ASCII字符形式展现分支合并历史
+     		-<n> 				#仅显示最后n次提交
+     		--since， --after 	#将提交限制在指定日期之后。
+     		--until， --before   #将提交限制为在指定日期之前进行的提交。
+     		--author 		    #仅显示作者条目与指定字符串匹配的提交。
+     		--committer 	     #仅显示提交者条目与指定字符串匹配的提交。
+     		--grep 				#仅显示带有包含字符串的提交消息的提交
+     		-S 				    #仅显示提交添加或删除与字符串匹配的代码的提交
+     		--no-merges			#筛选还未合并的
+      		--decorate			#显示分支当前所指的对象
+      		--all			    #显示所有分支!!!
+   ```
+   
+     format说明符	输出说明
+   %H	          	 提交哈希			  %h		缩写提交哈希
+   
+   %T					树哈希				  %t		缩写树哈希
+   
+   %P					父哈希				  %p		缩写父哈希
+   
+   %an				作者姓名	  	  %ae		作者电子邮件
+   
+   %ad				作者日期			%ar		作者日期，相对
+   
+   %cn				提交者名称		%ce		提交者电子邮件
+   
+   %cd				提交日期			%cr		提交日期，相对
+   
+   %s				   提交信息
++ 撤销操作
+
+```bash
+git commit --amend #提交暂存区内容到上一次提交中,重新编辑提交信息
+```
+
+```bash
+git reset HEAD <file> #把文件从缓存区中移除
+```
+
+```bash
+git chechout -- <file> #检出上次提交中的文件覆盖已做更改的文件
+```
+
++ 远程仓库
+
+  ```bash
+  git remote -v 						#显示所有远程仓库,和对应的URL
+  git remote add [shortname] [url] 	  #添加远程仓库
+  git fetch [remote-name] 			 #从远程仓库拉取数据
+  git push [remote-name] [branch-name]  #将数据推送到远程仓库
+  git remote show [remote-name] 		 #显示远程仓库的详细信息
+  git remote rename [new-nm] [old-nm]   #重命名
+  git remote rm [remote-name]           #删除远程仓库
+  ```
+
++ 标记
+
+  ```bash
+  git tag #列出所有标签,按照字母顺序
+  		-l "..." #添加筛选条件
+  git show [tag-name] #显示具体标签内容
+  ```
+
+  ```bash
+  git tag -a [tag-name] -m "message" #在当前指针上创建注释标签
+  git tag -a [tag-name] -m "message" [sha-1] #根据部分散列值补加标签到特定分支
+  git tag [tag-name] #在当前指针上创建轻量标签
+  ```
+
+  ```bash
+  git push [remote-name] [tag-name] #把标签传送到远程服务器上
+  					--tags #传送所有的标签
+  git checkout -b [branchname] [tag-name] #在特定标签上创建一个新的分支
+  ```
+
+  
+
++ 别名
+
+  ```bash
+  git config --global alias.[alias-name] '[command]'
+  ```
+  
+  我的别名:
+  
+  ```bash
+  logg:log --oneline --all --graph
+  ```
+  
+  
+
+
+## 3. 分支机制
+
+​	分支简介
+​	分支就是一个只向提交的指针,根据提交的父对象生成提交链
+
+<img src="D:\图片\commit-and-tree.png"  />
+
+<img src="D:\图片\commits-and-parents.png"  />
+
+ 1. 创建新的分支
+
+    创建一个新的指针指向当前提交, 因此git分支高效快速
+
+    其中git维护的==HEAD==指针指向当前所在的本地指针的分支
+
+    ```bash
+    git branch [branch-name] #在HEAD指针指向提交创建分支
+    		  -d [branch-name] #删除分支
+    ```
+
+    ```bash
+    rick@DESKTOP-M0096T1:~/learn_git/test_dir1$ git branch test-branch
+    rick@DESKTOP-M0096T1:~/learn_git/test_dir1$ git log --oneline --decorate      
+    1e5f078 (HEAD -> master, test-branch) update LICENSE                          
+    e7ab412 update README                                                         
+    3fe2e5d initial commit 
+    ```
+
+ 2. 切换分支
+
+    切换分支即改变==HEAD==指针指向的位置, 使其指向新的分支
+
+    继续提交会形成分支
+
+    **切换分支会改变工作目录文件**
+
+    ```bash
+    git chechout [branch-name]或[SHA-1]
+    			-b #分支不存在,先创建分支,再切换
+    ```
+
+    ```bash
+    rick@DESKTOP-M0096T1:~/learn_git/test_dir1$ git log --all --oneline --graph
+    * 7087854 (master) how old version of test.c
+    | * 5f59182 (HEAD -> test-branch) hello-world version of test.c
+    |/
+    * 1e5f078 update LICENSE
+    * e7ab412 update README
+    * 3fe2e5d initial commit
+    ```
+
+ 3. 合并分支
+
+    ```bash
+    git merge [branch-name] #合并分支到当前分支中(HEAD)
+    					  #记得使用git branch -d ... 删除被合并的分支保持简洁
+    ```
+
+    + Fast-forward: 当前分支在被合并分支的直接上游, 直接将当前指针前移
+
+    + 合并提交: git自行判断最优共同祖先, 以其为基础合并, 合并的提交有两个父提交
+
+    + 合并冲突: 处理冲突, 再次提交
+
+      ```bash
+      rick@DESKTOP-M0096T1:~/learn_git/test_dir1$ git checkout master
+      Switched to branch 'master'
+      rick@DESKTOP-M0096T1:~/learn_git/test_dir1$ git merge test-branch
+      Auto-merging test.c
+      CONFLICT (content): Merge conflict in test.c
+      Automatic merge failed; fix conflicts and then commit the result.
+      rick@DESKTOP-M0096T1:~/learn_git/test_dir1$ git status
+      On branch master
+      You have unmerged paths.
+        (fix conflicts and run "git commit")
+        (use "git merge --abort" to abort the merge)
+      
+      Unmerged paths:
+        (use "git add <file>..." to mark resolution)
+      
+              both modified:   test.c
+      
+      no changes added to commit (use "git add" and/or "git commit -a")
+      ```
+
+      ![image-20210123011252639](D:\图片\image-20210123011252639.png)
+
+      ```bash
+      rick@DESKTOP-M0096T1:~/learn_git/test_dir1$ git commit
+      U       test.c
+      error: Committing is not possible because you have unmerged files.
+      hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+      hint: as appropriate to mark resolution and make a commit.
+      fatal: Exiting because of an unresolved conflict.
+      rick@DESKTOP-M0096T1:~/learn_git/test_dir1$ git add test.c
+      rick@DESKTOP-M0096T1:~/learn_git/test_dir1$ git status
+      On branch master
+      All conflicts fixed but you are still merging.
+        (use "git commit" to conclude merge)
+      rick@DESKTOP-M0096T1:~/learn_git/test_dir1$ git commit
+      [master 6ee19b3] Merge branch 'test-branch'
+      rick@DESKTOP-M0096T1:~/learn_git/test_dir1$ git log --oneline --all --graph
+      *   6ee19b3 (HEAD -> master) Merge branch 'test-branch'
+      |\
+      | * 5f59182 (test-branch) hello-world version of test.c
+      * | 7087854 how old version of test.c
+      |/
+      * 1e5f078 update LICENSE
+      * e7ab412 update README
+      * 3fe2e5d initial commit
+      rick@DESKTOP-M0096T1:~/learn_git/test_dir1$ git branch -d test-branch
+      Deleted branch test-branch (was 5f59182).
+      ```
+
+4. 管理分支
+
+   ```bash
+   git branch #显示所有的分支, 使用星号(*)标注当前分支
+   		  -v #查看分支上的最新提交
+   		  --merged #已经合并的分支,建议删除这些分支
+   		  --no-merged #还未合并的分支,尝试删除时,给git因还未合并而显示删除失败
+   ```
+
+5. 分支工作流
+
+   + 长期分支工作流: 主分支(master)保留稳定性最高, develop, next, proposed分支稳定性低,进行前沿开发
+   + 主题分支: 为实现不同功能创建不同分支
+
+6. 远程分支
+
+   表达形式:==[remote-name]/[branch}==
+
+   git远程仓库指令
+
+   ```bash
+   git clone [url] [project-name] 		  #name为代替项目文件夹默认名称的名称
+   		-o [remote-name] 			#远程分支使用中,代替默认origin的名称
+   git remote -v 						#显示所有远程仓库,和对应的URL
+   git remote add [remote-name] [url] 	  #添加远程仓库
+   git fetch [remote-name] 			 #从远程仓库拉取数据
+   		--all #从所有远程仓库中拉取数据
+   		-u #设置为追踪分支
+   git push [remote-name] [branch-name]  #将数据推送到远程仓库
+   git remote show [remote-name] 		 #显示远程仓库的详细信息
+   git remote rename [new-name] [remote-name]  
+   								   #重命名
+   git remote rm [remote-name]           #删除远程仓库
+   ```
+
+   clone一个远程仓库
+
+   ```bash
+   rick@DESKTOP-M0096T1:~/learn_git$ git clone https://github.com/luxianche-studypath/test_dir_remote1.git
+   Cloning into 'test_dir_remote1'...
+   Username for 'https://github.com': luxianche-studypath
+   Password for 'https://luxianche-studypath@github.com':
+   remote: Enumerating objects: 7, done.
+   remote: Counting objects: 100% (7/7), done.
+   remote: Compressing objects: 100% (5/5), done.
+   remote: Total 7 (delta 0), reused 0 (delta 0), pack-reused 0
+   Unpacking objects: 100% (7/7), done.
+   rick@DESKTOP-M0096T1:~/learn_git/test_dir_remote1$ git log --oneline
+   83b89fd (HEAD -> main, origin/main, origin/HEAD) Create LICENSE
+   e30eb27 Create README.md
+   ```
+
+   自己在本地上工作, 产生新的提交, main和origin/main偏离
+
+   ```bash
+   rick@DESKTOP-M0096T1:~/learn_git/test_dir_remote1$ touch test2.c
+   rick@DESKTOP-M0096T1:~/learn_git/test_dir_remote1$ git add test2.c
+   rick@DESKTOP-M0096T1:~/learn_git/test_dir_remote1$ git commit -m "CREATE test2.c"
+   [main 0b1b4e3] CREATE test2.c
+    1 file changed, 0 insertions(+), 0 deletions(-)
+    create mode 100644 test2.c
+   rick@DESKTOP-M0096T1:~/learn_git/test_dir_remote1$ git log --oneline
+   0b1b4e3 (HEAD -> main) CREATE test2.c
+   83b89fd (origin/main, origin/HEAD) Create LICENSE
+   e30eb27 Create README.md
+   ```
+
+   其他人推送数据以后, ==fetch==整个远程仓库中的追踪分支的更新内容(默认为master), 与服务器同步, 更新origin/main位置
+
+   ```bash
+   rick@DESKTOP-M0096T1:~/learn_git/test_dir_remote1$ git fetch origin
+   Username for 'https://github.com': luxianche-studypath
+   Password for 'https://luxianche-studypath@github.com':
+   remote: Enumerating objects: 4, done.
+   remote: Counting objects: 100% (4/4), done.
+   remote: Compressing objects: 100% (3/3), done.
+   remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+   Unpacking objects: 100% (3/3), done.
+   From https://github.com/luxianche-studypath/test_dir_remote1
+      83b89fd..48e96e3  main       -> origin/main
+   rick@DESKTOP-M0096T1:~/learn_git/test_dir_remote1$ git log --oneline --all --graph
+   * 0b1b4e3 (HEAD -> main) CREATE test2.c
+   | * 48e96e3 (origin/main, origin/HEAD) Create test.c
+   |/
+   * 83b89fd Create LICENSE
+   * e30eb27 Create README.md
+   ```
+
+   在使用多个远程仓库时, 假设存在敏捷开发小组teamone, 使用git remote add添加到当前项目中.
+
+   ```bash
+   rick@DESKTOP-M0096T1:~/learn_git/test_dir_remote1$ git remote add teamone https://github.com/luxianche-studypath/test_dir_remote_teamone.git
+   rick@DESKTOP-M0096T1:~/learn_git/test_dir_remote1$ git remote
+   origin
+   teamone
+   ```
+
+   同样fetch teamone的最新进度
+
+   ```bash
+   rick@DESKTOP-M0096T1:~/learn_git/test_dir_remote1$ git fetch teamone
+   Username for 'https://github.com': luxianche-studypath
+   Password for 'https://luxianche-studypath@github.com':
+   remote: Enumerating objects: 4, done.
+   remote: Counting objects: 100% (4/4), done.
+   remote: Compressing objects: 100% (2/2), done.
+   remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+   Unpacking objects: 100% (3/3), done.
+   From https://github.com/luxianche-studypath/test_dir_remote_teamone
+    * [new branch]      main       -> teamone/main
+   rick@DESKTOP-M0096T1:~/learn_git/test_dir_remote1$ git log --oneline --all --graph
+   * bed69a9 (teamone/main) Create test3.c
+   | * 0b1b4e3 (HEAD -> main) CREATE test2.c
+   |/
+   | * 48e96e3 (origin/main, origin/HEAD) Create test.c
+   |/
+   * 83b89fd Create LICENSE
+   * e30eb27 Create README.md
+   ```
+
+   ==fetch==到的分支无法直接修改, 使用merge或checkout -b创建本地的分支再进行修改
+
+   ```bash
+   rick@DESKTOP-M0096T1:~/learn_git/test_dir_remote1$ git merge teamone/main
+   Merge made by the 'recursive' strategy.
+    test3.c | 1 +
+    1 file changed, 1 insertion(+)
+    create mode 100644 test3.c
+   rick@DESKTOP-M0096T1:~/learn_git/test_dir_remote1$ git merge origin/main
+   Merge made by the 'recursive' strategy.
+    test.c | 19 +++++++++++++++++++
+    1 file changed, 19 insertions(+)
+    create mode 100644 test.c
+   rick@DESKTOP-M0096T1:~/learn_git/test_dir_remote1$ git log --oneline --all --graph
+   *   90cec37 (HEAD -> main) Merge remote-tracking branch 'origin/main' into main
+   |\
+   | * 48e96e3 (origin/main, origin/HEAD) Create test.c
+   * |   98c52e7 Merge remote-tracking branch 'teamone/main' into main
+   |\ \
+   | * | bed69a9 (teamone/main) Create test3.c
+   | |/
+   * | 0b1b4e3 CREATE test2.c
+   |/
+   * 83b89fd Create LICENSE
+   * e30eb27 Create README.md
+   rick@DESKTOP-M0096T1:~/learn_git/test_dir_remote1$ ls
+   LICENSE  README.md  test.c  test2.c  test3.c
+   ```
+
+   ==push==自己的本地工作成果到服务器中与他人分享
+
+   ```bash
+   rick@DESKTOP-M0096T1:~/learn_git/test_dir_remote1$ git commit
+   [main 010096e] Creat test4.c
+    1 file changed, 0 insertions(+), 0 deletions(-)
+    create mode 100644 test4.c
+   rick@DESKTOP-M0096T1:~/learn_git/test_dir_remote1$ git push origin main
+   Username for 'https://github.com': luxianche-studypath
+   Password for 'https://luxianche-studypath@github.com':
+   Counting objects: 2, done.
+   Delta compression using up to 8 threads.
+   Compressing objects: 100% (2/2), done.
+   Writing objects: 100% (2/2), 263 bytes | 263.00 KiB/s, done.
+   Total 2 (delta 1), reused 0 (delta 0)
+   remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+   To https://github.com/luxianche-studypath/test_dir_remote1.git
+      90cec37..010096e  main -> main
+   rick@DESKTOP-M0096T1:~/learn_git/test_dir_remote1$ git log --oneline --all --graph
+   * 010096e (HEAD -> main, origin/main, origin/HEAD) Creat test4.c
+   *   90cec37 Merge remote-tracking branch 'origin/main' into main
+   |\
+   | * 48e96e3 Create test.c
+   * |   98c52e7 Merge remote-tracking branch 'teamone/main' into main
+   |\ \
+   | * | bed69a9 (teamone/main) Create test3.c
+   | |/
+   * | 0b1b4e3 CREATE test2.c
+   |/
+   * 83b89fd Create LICENSE
+   * e30eb27 Create README.md
+   ```
+
+   跟踪分支: git将会知道push到哪去和从哪里fetch,默认情况, 自动创建跟踪着origin/master的本地master分支, 自己创建跟踪其他分支(比如说master侧面的功能分支或前沿开发分支)
+
+   ```bash
+   git chechout -b [branch] [remote-name]/[remote-branch] #切换到分支中
+   git chechout --track [remote-name]/[remote-branch] #切换到分支中
+   git chechout [remote-branch] #切换到只有服务器存在的分支,自动创建跟踪分支,获取数据
+   git branch -u [remote-name]/[remote-branch] #给本地已存在分支设置远程分支
+   ```
+
+   ```bash
+   git branch -vv #查看已跟踪的分支,显示领先/落后提交数(仅提供本地缓存中的信息)
+   
+   git fetch --all #获取全部远程数据
+   git branch --vv #从而查看最新数据
+   ```
+
+   删除远程分支
+
+   ```bash
+   git push [remote-name] --delete [branch-name]
+   ```
+
+   > 不用每次都输入密码:
+   >
+   > ```bash
+   > git config --global credential.helper cache
+   > #缓存密码一段时间
+   > ```
+
+7. 变基
+
+   为了获得整洁的提交历史, 把分支上commit的所有diff在共同祖先基础上在目标分支中重复一遍,抛弃某些已有的链接, 创建了新的对应提交
+
+   ```bash
+   git rebase [base-branch] [topic-branch]
+   git checkout [base-branch]
+   git merge [topic-branch]
+   git branch -d [topic-branch] #一套操作把提交历史修改成线
+   ```
+
+   一个有趣的例子?
+
+   问题: 仅变基client分支![](D:\图片\interesting-rebase-1.png)
+
+   ```bash
+   git rebase --onto master server client
+   ```
+
+   效果:![](D:\图片\interesting-rebase-3.png)
+
+   **变基的危害**:
+
+   ==不要对已经存在于本地仓库以外的提交执行变基操作==
+
+## 4. Git服务器
+
+先确保服务器上安装了git-core,ssh
+
+```bash
+sudo apt-get install wget git-core
+sudo apt-get install ssh
+sudo /etc/init.d/ssh start #启动ssh
+sudo update-rc.d ssh defaults #ssh默认启动
+```
+
+添加用户git方便管理
+
+```bash
+sudo adduser --system --shell /bin/bash --gecos 'git version control' --group --home /home/git git
+sudo passwd git
+```
+
+1. 建立裸仓库裸仓库(没有工作目录)
+
+   按照惯例,裸仓库后缀为==.git==
+
+   + 在已有仓库的基础上
+
+     ```bash
+     git clone --bare my_project my_project.git
+     #上述操作等同于
+     cp -Rf my_project/.git my_project.git
+     ```
+
+   + 新建
+
+     ```bash
+     mkdir test.git
+     cd test.git
+     git --bare init
+     		--shared #为用户做赋予写权限
+     ```
+
+2. 仓库放置在服务器上
+
+   ```bash
+   scp -r my_project user@git.example.com:/srv/git
+   ```
+
+   我的实例:
+
+   ```bash
+   scp -r learn_c.git git@192.168.10:/home/git
+   ```
+
++ 成员获取仓库(linux用户登录)
+
+  ```bash
+  git clone user@git.example.com:/srv/git/my_project.git
+  git remote add [remote-name] user@git.example.com:/srv/git/my_project.git
+  ```
+  
++ 成员获取仓库(ssh登录用户git)
+
+  使用linux用户登录的问题在于用户管理指令复杂
+
+  创建一个专用用户git管理仓库
+
+  成员使用ssh远程登录git用户对仓库进行操作
+
+  ssh登录:成员生成自己的密钥(把自己的ssh密码设为空可实现无密码登录), 通过电子邮件发送到管理员的邮箱,管理员把密钥添加到服务器的文件中.
+
+  1. 生成个人的ssh密钥
+
+     用户的ssh密钥保存在==~/.ssh==
+
+     ```bash
+     #检查密钥
+     $ cd ~/.ssh
+     $ ls #检查是否拥有密钥id_dsa id_dsa.pub
+     #生成密钥
+     $ ssh -keygen #生成密钥,过程中输入使用密码,密码可设置为空
+     $ cat ~/.ssh/id_rsa.pub #查看密钥,将其发送给管理员
+     ```
+
+  2. 服务器设置
+
+     ```bash
+     #初步设置
+     $ sudo adduser git
+     $ su git
+     $ cd ~
+     $ mkdir .ssh && chmod 700 .ssh #创建.ssh目录,设置权限为rwx|---|---
+     $ touch .ssh/authorized_keys && chmod 600 .ssh/authorized_keys#创建文件保存允许登录的密钥,设置权限为rw-|---|---
+     #添加授权的密钥
+     $ cat /tmp/id_rsa.member.pub >> ~/.ssh/authorized_keys
+     ```
+
+  3. 用户的使用
+
+     ```bash
+     #使用ssh登录git用户操作仓库
+     $ git remote add add origin git@server:/home/git/project.git
+     ```
+
+  4. 改进安全性:
+
+     所有用户使用git身份ssh登录到服务器获得了shell访问权限
+
+     限制git用户的shell, 将其设置为git-shell
+
+     防止git仓库操作之外的操作
+
+     ```bash
+     #查看git-shell是否存在shell列表中
+     $ cat /etc/shells
+     #如果不存在:
+     #查看安装路径
+     $ which git-shell
+     #加入shell列表
+     $ vim /etc/shells
+     #更改git用户的shell:/usr/bin/git-shell
+     $ sudo chsh git
+     ```
+
+
+## 5. 分布式git
+
+### 为项目做贡献
+
+提交准则:
+
+1. 每次提交都是一个独立的变更集
+
+2. 创建高质量的提交信息
+
+   ```txt
+   简要的变更汇总说明(不超过50字)
+   
+   相近的说明(每行超过72字)
+   变更的动机
+   实现之前与之后的对比
+   语言表述使用命令,不添加主语,保持简洁
+   
+   	- 使用这样的条目符号
+   	- 表示列表和其他信息
+   ```
+
++ 私有小型团队(集中式工作流)
+
+  ![将所有更改推回服务器后，Jessica的历史记录](https://git-scm.com/book/en/v2/images/small-team-7.png)
+
+  <img src="https://git-scm.com/book/en/v2/images/small-team-flow.png" alt="简单的多开发人员Git工作流程的一般事件顺序" style="zoom: 80%;" />
+
+  远程仓库产生了新的提交之后, 本地先fetch拉取, merge合并到本地分支, 再push到远程仓库
+
+  > 查看存在远程而没有在本地未合并的提交, 查看之后进行合并
+  >
+  > ```bash
+  > git log --no-merges issue_branch..origin/master
+  > ```
+
++ 私有管理团队(集成管理者工作流)
+
+  功能驱动开发, 队员在功能分支上工作, 功能负责人把功能分支合并到master上
+
+  ![杰西卡的两个主题分支合并后的历史](https://git-scm.com/book/en/v2/images/managed-team-3.png)
+
+  ![此管理团队工作流程的基本顺序](https://git-scm.com/book/en/v2/images/managed-team-flow.png)
+
+  > 使用-u设置追踪分支简化拉去推送过程
+  >
+  > ```bash
+  > git push -u [remote] [remote_branch]
+  > ```
+
+  SHA-1cd685:
+
+  ```bash
+  git push -u origin featureB:featureBee #把featureB中已经合并的分支推送到featureBee分支上
+  ```
+
++ 派生的公共项目
+
+  ```bash
+  git clone <url> #获取公共项目代码
+  cd project
+  git checkout -b featureA #建立功能分支
+  ... work ...
+  git commit
+  git remote add myfork #自己的可写派生版本
+  git push -u myfork featureA #推送到自己的公开仓库使得可被拉取
+  git request-pull origin/master myfork#想要推入的基础分支 拉取操作需要的rul
+  ```
+
+  
+
+  ![Commit history after `featureA` work](https://git-scm.com/book/en/v2/images/public-small-2.png)
+
+  Because you rebased the branch, you have to specify the `-f` to your push command in order to be able to replace the `featureA` branch on the server with a commit that isn’t a descendant of it.
