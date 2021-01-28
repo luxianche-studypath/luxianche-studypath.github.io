@@ -30,3 +30,5 @@ plugins:
 # Custom variables
 owner : "luxiache"
 year : "2021"
+
+intensedebate_comments: true
