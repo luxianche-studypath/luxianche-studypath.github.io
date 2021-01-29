@@ -15,9 +15,9 @@ title: Category
     <ul>
     {% for post in site.categories[category_name] %}
     <article class="archive-item">
-      <li><h4><a href="{{ post.url | prepend: site.baseurl | replace: '//', '/' }}">
+      <li><a href="{{ post.url | prepend: site.baseurl | replace: '//', '/' }}">
           {{ post.title }}
-          </a></h4></li>
+          </a></li>
     </article>
     {% endfor %}
     </ul>
