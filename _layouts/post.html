@@ -20,9 +20,6 @@ layout: default
   </div>
   <!--date-->
   日期:<time datetime="{{ page.date | date_to_xmlschema }}" class="by-line">{{ page.date | date_to_string }}</time>
-  <!--流量统计-->
-  <br/>
-  浏览:<span data-hk-page="current"> - </span>
   <!--toc function-->
   {% include toc.html html=content %}{{ content }}
 </article>
