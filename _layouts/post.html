@@ -4,7 +4,7 @@ layout: default
 
 <article>
   
-  <h2>{{ page.title }}</h2>
+  <h1>{{ page.title }}</h1>
   
   <!--categoty-->
   <div class="post-categories">
@@ -14,14 +14,15 @@ layout: default
     {% assign categories = page.categories %}
     {% endif %}
     {% for category in categories %}
-    categoty:<a href="https://luxianche.tech/categories.html#{{category|slugize}}">{{category}}</a>
+    分类:<a href="https://luxianche.tech/categories.html#{{category|slugize}}">{{category}}</a>
     {% unless forloop.last %}&nbsp;{% endunless %}
     {% endfor %}
   </div>
-  
   <!--date-->
-  date:<time datetime="{{ page.date | date_to_xmlschema }}" class="by-line">{{ page.date | date_to_string }}</time>
-  
+  日期:<time datetime="{{ page.date | date_to_xmlschema }}" class="by-line">{{ page.date | date_to_string }}</time>
+  <!--流量统计-->
+  <br/>
+  浏览:<span data-hk-page="current"> - </span>
   <!--toc function-->
   {% include toc.html html=content %}{{ content }}
 </article>
