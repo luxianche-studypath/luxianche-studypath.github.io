@@ -5,6 +5,7 @@ layout: default
 <article>
   
   <h2>{{ page.title }}</h2>
+  
   <!--categoty-->
   <div class="post-categories">
     {% if post %}
@@ -13,26 +14,27 @@ layout: default
     {% assign categories = page.categories %}
     {% endif %}
     {% for category in categories %}
-    <a href="{{site.baseurl}}/categories.html">{{category}}</a>
+    categoty:<a href="https://luxianche.tech/categories.html#{{category|slugize}}">{{category}}</a>
     {% unless forloop.last %}&nbsp;{% endunless %}
     {% endfor %}
   </div>
-
-  <!--toc function-->
-  {% include toc.html html=content %}
   
-  <time datetime="{{ page.date | date_to_xmlschema }}" class="by-line">{{ page.date | date_to_string }}</time>
-  {{ content }}
+  <!--date-->
+  date:<time datetime="{{ page.date | date_to_xmlschema }}" class="by-line">{{ page.date | date_to_string }}</time>
+  
+  <!--toc function-->
+  {% include toc.html html=content %}{{ content }}
 </article>
 
 <!--comment function-->
+<!--the amount of comments-->
 <script>
   var idcomments_acct = '2d2b3b2cdc8b32acd848f4239029c673';
   var idcomments_post_id;
   var idcomments_post_url;
 </script>
 <script type="text/javascript" src="https://www.intensedebate.com/js/genericLinkWrapperV2.js"></script>
-
+<!--comments-->
 <script>
   var idcomments_acct = '2d2b3b2cdc8b32acd848f4239029c673';
   var idcomments_post_id;
