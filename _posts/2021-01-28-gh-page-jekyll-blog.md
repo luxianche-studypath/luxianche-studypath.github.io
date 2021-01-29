@@ -161,6 +161,8 @@ categories: project
 
 4. [cloudcannon](https://learn.cloudcannon.com/)
 
+5. [lemonchann](https://lemonchann.github.io/)
+
 ## 感想
 
 搭建博客饶了很多弯路,看了很多教程,相互参考,github官方文档,绕来绕去简单几个步骤搞了一天,问题主要处在安装jekyll上,最后发现fork一个主题示例是最好的方法,fork成功之后我直接😱.还是要详细浏览文档之后再操作,多看几个教程.还有早睡早起.
