@@ -1,10 +1,8 @@
 ---
 title: Pro Git
 published: true
-categories: git/github
+categories: note
 ---
-# Pro Git
-
 ## 1. 版本控制系统
 
 **版本控制**:按时间顺序记录某一个或一系列文件的变更,可以查看以前的特定版本
