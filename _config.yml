@@ -28,7 +28,7 @@ plugins:
   - jekyll-sitemap
 
 # Custom variables
-owner : "luxiache"
+owner : "luxianche"
 year : "2021"
 
 intensedebate_comments: true
