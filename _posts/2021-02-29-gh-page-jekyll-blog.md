@@ -145,11 +145,19 @@ categories: project
 
 2. [文章分类功能](https://blog.webjeda.com/jekyll-categories/)
 
+3. [流量统计](http://ibruce.info/2015/04/04/busuanzi/)
+
+4. [icon库](https://www.iconfont.cn/)
+
+5. [搜索栏]()
+
 ### 参考链接
 
 1. [github官方文档](https://docs.github.com/en/github/working-with-github-pages)
 
 2. [Halfrost的领域](https://halfrost.com/jekyll/)
+
+3. [少数派](https://sspai.com/post/54608)
 
 ## 感想
 
