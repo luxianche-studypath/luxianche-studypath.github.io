@@ -149,7 +149,7 @@ categories: project
 
 4. [icon库](https://www.iconfont.cn/)
 
-5. [搜索栏]()
+5. [搜索栏](https://learn.cloudcannon.com/jekyll/jekyll-search-using-lunr-js/)
 
 ### 参考链接
 
@@ -158,6 +158,8 @@ categories: project
 2. [Halfrost的领域](https://halfrost.com/jekyll/)
 
 3. [少数派](https://sspai.com/post/54608)
+
+4. [cloudcannon](https://learn.cloudcannon.com/)
 
 ## 感想
 
