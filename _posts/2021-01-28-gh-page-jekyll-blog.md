@@ -149,7 +149,7 @@ categories: project
 
 4. [icon库](https://www.iconfont.cn/)
 
-5. [搜索栏](https://learn.cloudcannon.com/jekyll/jekyll-search-using-lunr-js/)
+5. [搜索栏](https://zoharandroid.github.io/2019-08-01-jekyll%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%AE%9E%E7%8E%B0%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD/)
 
 ### 参考链接
 
