@@ -18,8 +18,16 @@ layout: default
     {% unless forloop.last %}&nbsp;{% endunless %}
     {% endfor %}
   </div>
+  
   <!--date-->
   日期:<time datetime="{{ page.date | date_to_xmlschema }}" class="by-line">{{ page.date | date_to_string }}</time>
+  
+  <br/>
+  <!--统计-->
+  <span id="busuanzi_container_page_pv">
+  阅读:<span id="busuanzi_value_page_pv"></span>次
+  </span>
+  
   <!--toc function-->
   {% include toc.html html=content %}{{ content }}
 </article>
