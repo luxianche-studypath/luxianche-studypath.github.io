@@ -4,7 +4,17 @@ title: Search
 ---
 
 <!-- HTML elements for search -->
-<input type="text" id="search-input" placeholder="搜索博客 - 输入标题/相关内容/日期/Tags.." style="width:380px;"/>
+<div style="text-align:center">
+<span style="font-size:18px">search:</span><input type="text" id="search-input" style="
+    width:30%;
+    outline-style:none;
+    border: 2px solid #b5e853;
+    background-color: #1b1b1b;
+    color: white;
+    padding: 5px 5px;
+"/>
+</div>
+
 <ul id="results-container"></ul>
 
 <!-- script pointing to jekyll-search.js -->
