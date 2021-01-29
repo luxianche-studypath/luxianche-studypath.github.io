@@ -1,7 +1,7 @@
 ---
 title: 如何阅读一本书
 published: true
-categories: note
+categories: passage
 ---
 
 ## 检视阅读
