@@ -1,7 +1,7 @@
 ---
 title: 中国文化课
 published: true
-categories: passage
+categories: book
 ---
 
 ![](/assets/fuchunshangjutu.jpg)

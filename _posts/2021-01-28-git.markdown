@@ -1,5 +1,5 @@
 ---
-title: Pro Git
+title: Git
 published: true
 categories: note
 ---
