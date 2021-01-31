@@ -19,31 +19,31 @@ categories: project
     >github简介:git仓库托管平台,git为一种分布式!版本控制系统
     >
 
-    ![](/assets/post/2021-02-29-gh-page-jekyll-blog/2021-01-29-085301.png)
+    ![](/assets/post/2021-01-29-gh-page-jekyll-blog/2021-01-29-085301.png)
 
 2. 挑选一个喜欢的[jekyll主题](http://jekyllthemes.org/),fork它的仓库
 
-    ![](/assets/post/2021-02-29-gh-page-jekyll-blog/2021-01-29-090428.png)
+    ![](/assets/post/2021-01-29-gh-page-jekyll-blog/2021-01-29-090428.png)
 
     比如说主题black-pourl,点击它
 
-    ![](/assets/post/2021-02-29-gh-page-jekyll-blog/2021-01-29-090707.png)
+    ![](/assets/post/2021-01-29-gh-page-jekyll-blog/2021-01-29-090707.png)
 
     点击homepage去它的github首页
 
-    ![](/assets/post/2021-02-29-gh-page-jekyll-blog/2021-01-29-090748.png)
+    ![](/assets/post/2021-01-29-gh-page-jekyll-blog/2021-01-29-090748.png)
 
     点击右上角的fork,复制到自己的仓库
 
-    ![](/assets/post/2021-02-29-gh-page-jekyll-blog/2021-01-29-091049.png)
+    ![](/assets/post/2021-01-29-gh-page-jekyll-blog/2021-01-29-091049.png)
 
     切换到settings更改仓库的名称,把仓库名改为`username.github.io`,username使用你的用户名替换
 
-    ![](/assets/post/2021-02-29-gh-page-jekyll-blog/2021-01-29-091233.png)\
+    ![](/assets/post/2021-01-29-gh-page-jekyll-blog/2021-01-29-091233.png)\
 
     再setting中切换发布源为master
 
-    ![](/assets/post/2021-02-29-gh-page-jekyll-blog/publishing-source-drop-down.png)
+    ![](/assets/post/2021-01-29-gh-page-jekyll-blog/publishing-source-drop-down.png)
 
     然后使用浏览器访问username.github.io就可以看到自己的博客
 
@@ -54,11 +54,11 @@ categories: project
 
 2. 解析域名到username.github.io(域名先要实名认证,审核一般需要一个小时左右)
 
-    ![](/assets/post/2021-02-29-gh-page-jekyll-blog/2021-01-29-092736.png)
+    ![](/assets/post/2021-01-29-gh-page-jekyll-blog/2021-01-29-092736.png)
 
 3. 在github setting中设置custom domain
 
-    ![](/assets/post/2021-02-29-gh-page-jekyll-blog/2021-01-29-093122.png)
+    ![](/assets/post/2021-01-29-gh-page-jekyll-blog/2021-01-29-093122.png)
 
     github在仓库中创建了一个文件CNAME,内容为你的域名
 
@@ -91,7 +91,7 @@ categories: project
 
 4. 使用git clone你的github仓库
 
-    ![](/assets/post/2021-02-29-gh-page-jekyll-blog/2021-01-29-094158.png)    
+    ![](/assets/post/2021-01-29-gh-page-jekyll-blog/2021-01-29-094158.png)    
 
     ```bash
     git clone https://github.com/username/username.github.io.git
