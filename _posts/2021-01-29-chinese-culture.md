@@ -4,7 +4,8 @@ published: true
 categories: book
 ---
 
-![](/assets/fuchunshangjutu.jpg)
+![](/assets/cover-chinese-culture.jpg)
+![](/assets/author-chinese-culture.jpg)
 
 ## 引论-文化定义
 

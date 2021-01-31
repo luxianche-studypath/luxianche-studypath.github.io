@@ -4,6 +4,8 @@ published: true
 categories: book
 ---
 
+![](/assets/cover-how-to-read-book.jpg)
+
 ## 检视阅读
 
 在一定的时间里,抓住一本书的重点,做结构笔记

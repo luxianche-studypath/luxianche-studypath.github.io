@@ -4,6 +4,8 @@ published: true
 categories: book
 ---
 
+![](assets/cover-sibian-lichang.jpg)
+
 ## 思维的要素
 
 1. 目的: 目标, 对象
