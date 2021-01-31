@@ -4,8 +4,8 @@ published: true
 categories: book
 ---
 
-![](/assets/cover-thing-fast-slow.jpg)
-![](/assets/author-thing-fast-slow.jpg)
+![](/assets/posts/book-note/cover-thing-fast-slow.jpg)
+![](/assets/posts/book-note/author-thing-fast-slow.jpg)
 
 ## 系统1,系统2
 

@@ -4,8 +4,8 @@ published: true
 categories: book
 ---
 
-![](/assets/cover-chinese-culture.jpg)
-![](/assets/author-chinese-culture.jpg)
+![](/assets/posts/book-note/cover-chinese-culture.jpg)
+![](/assets/posts/book-note/author-chinese-culture.jpg)
 
 ## 引论-文化定义
 

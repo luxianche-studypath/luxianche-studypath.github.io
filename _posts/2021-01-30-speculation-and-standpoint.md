@@ -4,7 +4,7 @@ published: true
 categories: book
 ---
 
-![](assets/cover-sibian-lichang.jpg)
+![](assets/posts/book-note/cover-sibian-lichang.jpg)
 
 ## 思维的要素
 

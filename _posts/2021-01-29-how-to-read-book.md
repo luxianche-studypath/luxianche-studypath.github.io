@@ -4,7 +4,7 @@ published: true
 categories: book
 ---
 
-![](/assets/cover-how-to-read-book.jpg)
+![](/assets/posts/book-note/cover-how-to-read-book.jpg)
 
 ## 检视阅读
 
