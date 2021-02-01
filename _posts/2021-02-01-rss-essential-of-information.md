@@ -1,0 +1,42 @@
+---
+title: RSS:回归信息
+published: true
+category: passage
+---
+
+​互联网使得信息快速远距离传递, 我们可以获取大量信息.
+
+​学习兴起的新技术, 追随由爱好者组成的社区, 通过新闻见证历史, 关注内容创作者的优质内容, 和他人分享精彩的创意.
+
+​在网站之间来回奔走, 手动检查更新内容, 有些浪费时间.
+
+​不时还会忘记自己的初心, 踱步于鱼龙混杂之中.
+
+在流量兑现的逻辑驱动之下, 平台试图拖住你的脚步, 而且我们并不能完全把握自己的注意力.
+
+有人说, 互联网时代之下每个人都有了发言权, 因此网络上一片混乱, 价值丧乱.
+
+而我说, 互联网并没有使人获得发言权, 只是让更多无关的人听到了发言.
+
+唇枪舌战, 群魔乱舞就此而起.
+
+闭上眼, 刚刚眼前的一切和自己又有什么关系呢.
+
+中国谚语道:"眼不见, 心不烦".
+
+RSS订阅就是解决方案.
+
+> ​**RSS**（**Really Simple Syndication**）是Web供稿，允许用户和应用程序以标准化的计算机可读格式访问网站的更新。这些提要例如可以允许
+>用户在单个新闻聚合器中跟踪许多不同的网站。新闻聚合器将自动检查RSS提要中是否有新内容，从而使列表可以自动从网站传递到网站或从网站传递给用户。
+>[摘自wiki pedia](https://en.wikipedia.org/wiki/RSS#:~:text=RSS%20RDF%20Site%20Summary%20or,in%20a%20single%20news%20aggregator)
+
+1. rss订阅源
+
+    + [生成rss订阅源:rsshub](https://docs.rsshub.app/)
+
+2. 新闻聚合器推荐
+
+    + [feedly](https://feedly.com/)
+    + [inoreader](https://www.inoreader.com/)
+    + [news.google](https://news.google.com/)
+    + [flipboard](https://flipboard.com/)
