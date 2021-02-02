@@ -36,7 +36,4 @@ RSS订阅就是解决方案.
 
 2. 新闻聚合器推荐
 
-    + [feedly](https://feedly.com/)
-    + [inoreader](https://www.inoreader.com/)
-    + [news.google](https://news.google.com/)
-    + [flipboard](https://flipboard.com/)
+    + [fluent-reader](https://github.com/yang991178/fluent-reader)
