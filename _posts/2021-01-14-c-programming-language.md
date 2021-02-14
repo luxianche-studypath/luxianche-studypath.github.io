@@ -1,12 +1,8 @@
 ---
 title: C programming language
-published: True
-category: note
+published: true
+categories: note
 ---
-
-# C programming language
-
-[TOC]
 
 ## C语言简介
 
