@@ -1,7 +1,7 @@
 ---
-title：C programming language
-published：True
-category：note
+title: C programming language
+published: True
+category: note
 ---
 
 # C programming language
