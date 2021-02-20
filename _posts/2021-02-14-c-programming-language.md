@@ -61,7 +61,7 @@ Dennis Ritch & Ken Thompson在开发UNIX操作系统时设计了C语言，基于
 
 可移植类型`<stdint.h>` `<inttype.h>`
 
-*查看自己机器中的类型大小*
+==查看自己机器中的类型大小==
 
 ```c
 #include<stdio.h>
@@ -93,7 +93,7 @@ Type char has a size of 1 bytes.
 Type _Bool has a size of 1 bytes.
 ```
 
-*类型转换*
+==类型转换==
 
 涉及两种类型运算，分别转换为更高级
 
@@ -157,7 +157,7 @@ type function(int, int, int arry[*][*]);
 
 声明：
 
-```c*
+```c
 type * ptr;
 ```
 
@@ -173,11 +173,11 @@ type * ptr;
 
 #### 字符串
 
-*字符串*是以空字符`\0`结尾的char类型数组
+==字符串==是以空字符`\0`结尾的char类型数组
 
 使用双引号`""`括起来的内容被视为指向该字符串储存位置的指针
 
-字符串存储在*静态存储区*, 初始化数组获得字符串的副本, 初始化指针只获得地址
+字符串存储在==静态存储区==, 初始化数组获得字符串的副本, 初始化指针只获得地址
 
 编译器可以使用内存中一个副本来表示所有相同的字符串字面量,建议初始化指针为字符串字面量时使用`const`限定符
 
@@ -252,6 +252,192 @@ char *search_string(char *target, char *source)
 ```
 
 ### 结构和其他数据形式
+
+#### 结构
+
+提高数据表达能力，定义新的类型
+
+结构声明（模板）
+
+```c
+struct name {
+    type property_name;
+    ...
+}/*variable*/;
+```
+
+声明结构变量
+
+```c
+struct name variable;
+```
+
+初始化
+
+```c
+struct name variable = {
+    var1,
+    .property = var2,
+    ...
+};
+```
+
+访问结构成员
+
+```c
+struct_var.property
+struct_ptr->property
+```
+
+结构字面量
+
+```c
+struct_var = (struct name){var1, var2...}
+```
+
+伸缩型数组成员
+
+```c
+struct flex {
+    int arry[];
+};
+//usage:
+struct flex * ptr = malloc(sizeof(flex) + 5 * sizeof(int));
+ptr->arry[4] = 0;
+```
+
+  匿名结构
+
+```c
+struct person {
+    int id;
+    struct {char first[20], char last[20]};
+};
+
+struct person ted = {9328, {"Ted", "Grass"}};
+puts(ted.first);
+```
+
+保存结构（文件）
+
+```c
+#include<stdio.h>
+fwrite(&struct_name, sizeof(struct_name), 1, fp); 
+```
+
+#### 联合
+
+在同一内存空间中储存不同的数据类型
+
+声明
+
+```c
+union hold {
+    int digit;
+    char letter;
+    double bigfl;
+};
+```
+
+初始化与访问
+
+```c
+union hold val;
+union hold foo = {.int = 1};
+union hold * ptr;
+
+val.digit = 1;
+val.letter = 'A';
+
+ptr = & val;
+ptr->int = 0;
+```
+
+匿名联合
+
+```c
+//example:
+struct owner {
+    char socsecurity[12];
+	...
+};
+struct leasecompany {
+    char name[40];
+	char headquearters[40];
+    ...
+};
+struct car_data{
+    char make[15];
+    int status;
+    union {
+        struct owner owncar;
+        struct leasecompany leasecar;
+    };
+    ...
+}
+
+struct car_data flits;
+flits.owncar.socsecurity = "SHAFLK";
+```
+
+#### 枚举
+
+声明符号名称来表示整形常量(0, 1, 2...)，提高可读性
+
+```c
+enum spectrum {red, yellow, greem, blue};
+enum spectrum color;
+color = blue;
+```
+
+默认值：可以手动指定，默认从零或上一个指定值开始递增
+
+````c
+enum level {low = 100, medium = 500, high =2000};
+````
+
+### typedef
+
+```c
+typedef struct{
+    double real;
+    double imag;
+}complex;
+```
+
+### 复杂的声明
+
+`[]` `()`  优先级相同，从左向右结合，大于`*`
+
+```c
+int * risks[10];
+//包含10个元素的数组，元素为指向int的指针
+
+int (* risks)[10];
+//指针，指包含10个元素的数组，元素为int
+
+int * goods[10][5];
+//10*5的数组，元素为指向int的指针
+
+char (* flump[3])(int);
+//3个元素的数组，元素为指针，指向参数为int返回char的函数
+```
+
+指向函数的指针：写出函数原型，函数名前加`*`外带括号`()`
+
+函数名是函数的地址
+
+```c
+void f(char *);
+void (* pf)(char *);
+pf = f;
+//usage:
+pf("parameter");
+//or
+(* pf)("parameter");
+```
+
+
 
 
 
@@ -330,7 +516,7 @@ char *search_string(char *target, char *source)
 
 ### 字符输入输出
 
-用户输入字符被收集存储在*缓冲区*中，按下`Enter`程序才可以使用用户输入的字符
+用户输入字符被收集存储在==缓冲区==中，按下`Enter`程序才可以使用用户输入的字符
 
 程序从缓冲区中获取单个字符的函数：
 
@@ -397,7 +583,7 @@ char *s_gets(char *st, int n)
         //checkout the end of the input
         while (st[i] != '\n' && st[i] != '\0')
             i++;
-        if (st[i] == '\n'){
+        if (st[i]=='\n'){
             //input end with a "Enter":
             //replace the '\n' to '\0'
             st[i]='\0';
@@ -514,6 +700,12 @@ char *s_gets(char *st, int n)
 
    + ftell告诉当前文件指针与开头距离
 
+   ```c
+   void rewind(FILE * fp);
+   ```
+
+   + 文件指针移动到文件开头
+
    其他：
 
    ```c
@@ -549,22 +741,22 @@ char *s_gets(char *st, int n)
    ```c
    //关闭文件，检查是否成功关闭，成功则返回0
    if (fclose(fp) != 0)
-       printf("Error in closing file\n");
+       printf("Error in closing file\n")；
    ```
 
 
 
 ## 语句、运算符、表达式
 
-*语句*是一条完整的计算机指令，简单语句使用一个分号结尾；复合语句使用{花括号}括起
+==语句==是一条完整的计算机指令，简单语句使用一个分号结尾；复合语句使用{花括号}括起
 
-运算对象是*运算符*操作的对象，*表达式*由运算对象和运算符组成，每个表达式都有一个值
+运算对象是==运算符==操作的对象，==表达式==由运算对象和运算符组成，每个表达式都有一个值
 
-表达式的*副作用*是对文件或对象的修改，所有副作用在*序列点*之前发生(；或完整表达式)
+表达式的==副作用==是对文件或对象的修改，所有副作用在==序列点==之前发生(；或完整表达式)
 
 | 赋值运算符 | 含义                                                         |
 | :--------: | ------------------------------------------------------------ |
-|    `=`     | 赋值表达式，*左值*(用于标识或定位存储位置)可用在赋值表达式的左侧 |
+|    `=`     | 赋值表达式，==左值==(用于标识或定位存储位置)可用在赋值表达式的左侧 |
 |    `+=`    | +的增强赋值                                                  |
 |    `-=`    | -的增强赋值                                                  |
 |    `*=`    | *的增强赋值                                                  |
@@ -583,7 +775,7 @@ char *s_gets(char *st, int n)
 |    `<=`    | 小于等于         |
 |    `>`     | 大于             |
 |    `>=`    | 大于等于         |
-|    `*`    | 相等             |
+|    `==`    | 相等             |
 |    `!=`    | 不等             |
 
 | 逻辑运算符 | 含义 |
@@ -669,14 +861,14 @@ label: statement
 
 ## 函数
 
-*函数原型*定义函数参数类型和返回类型, 供编译器使用, 可使用`void`类型表示没有参数或返回类型
+==函数原型==定义函数参数类型和返回类型, 供编译器使用, 可使用`void`类型表示没有参数或返回类型
 
 ```c
 //variable name can be ignored
 type function_name(type1 var1,type2 var2)
 ```
 
-*函数*是完成特定任务的独立程序代码单元
+==函数==是完成特定任务的独立程序代码单元
 
 ````c
 type function_name(type1 var1,type2 var2)
@@ -757,9 +949,9 @@ type function_name(type1 var1,type2 var2)
   2. 内部链接：只能在一个翻译单元中使用
   3. 无链接
 + 存储期
-  1. 静态存储器，存在于*程序*执行期间
-  2. 线程存储器，存在于*线程*执行期间
-  3. 自动存储器，存在于*块*的执行期间
+  1. 静态存储器，存在于==程序==执行期间
+  2. 线程存储器，存在于==线程==执行期间
+  3. 自动存储器，存在于==块==的执行期间
   4. 动态分配存储器
 
 ### 存储类别
@@ -786,7 +978,7 @@ type function_name(type1 var1,type2 var2)
 
 3. 块作用域的静态变量
 
-   在*块内*使用关键字`static`声明静态变量
+   在==块内==使用关键字`static`声明静态变量
 
    该变量只在编译时初始化一次
 
@@ -825,6 +1017,13 @@ type function_name(type1 var1,type2 var2)
 
    + 在指针中使用
 
+     ```c
+     //不能指向别的地方
+     type * const ptr = &var;
+     //不能修改被指向的值
+     const type * ptr = &var;
+     ```
+
    + 对全局数据使用
 
      ```c
@@ -861,9 +1060,5 @@ type function_name(type1 var1,type2 var2)
 
    用于多线程编程
 
-
-
 ## C预处理器和C库
-
-
 {% endraw %}
