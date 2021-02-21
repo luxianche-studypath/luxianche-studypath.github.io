@@ -342,7 +342,7 @@ union hold {
 初始化与访问
 
 ```c
-union hold val;
+zunion hold val;
 union hold foo = {.int = 1};
 union hold * ptr;
 
@@ -435,6 +435,53 @@ pf = f;
 pf("parameter");
 //or
 (* pf)("parameter");
+```
+
+### 位字段
+
+该结构为每个字段提供标签，确定该字段宽度。例：包含4个1位的字段，存储在一个int中
+
+```c
+struct {
+    unsigned int autfd : 1;
+    unsigned int bldfc : 1;
+    unsigned int undln : 1;
+    unsigned int itals : 1;
+} prnt;
+```
+
+使用标签访问：
+
+```c
+prnt.autfd = 0;
+prnt.bldfc = 1;
+```
+
+使用未命名字段填充，使用0宽度字段强制对齐
+
+```c
+struct {
+    unsigned int field1 : 1;
+    unsigned int 		: 2;
+    unsigned int field2 : 1;
+    unsigned int 		: 0;
+    unsigned int field3 : 1;
+} stuff;
+```
+
+例子：使用位字段表示一个方框的属性
+
+```c
+#include<stdbool.h>
+struct box_props {
+    bool opaque				  : 1;
+    unsigned int fill_color   : 3;
+    unsigned int			  : 4;
+    bool show_border		  : 2;
+    unsigned int border_color : 3;
+    unsigned int border_style : 2;
+    unsigned int			  : 2;
+}
 ```
 
 
@@ -741,7 +788,7 @@ char *s_gets(char *st, int n)
    ```c
    //关闭文件，检查是否成功关闭，成功则返回0
    if (fclose(fp) != 0)
-       printf("Error in closing file\n")；
+       printf("Error in closing file\n");
    ```
 
 
@@ -790,6 +837,7 @@ char *s_gets(char *st, int n)
 |  `(type)`  | 强制类型转换                                                |
 |    `,`     | 连接多个表达式，最左侧先求值，表达式的值为最右侧表达式的值< |
 |    `?:`    | 条件运算符：expression ? expression_true : expression_false |
+| `_Alignof` | 返回一个对象的对其要求，返回size_t                          |
 
 | 位操作 | 含义     |
 | :----: | -------- |
@@ -800,7 +848,37 @@ char *s_gets(char *st, int n)
 |  `<<`  | 左移     |
 |  `>>`  | 右移     |
 
+位操作应用：
 
+````c
+//int to binary string
+#include<limits.h>
+
+char * itobs(int n, char * ps)
+{
+    const static int size = CHAR_BIT * sizeof(int);
+    for (int i = size - 1; i >= 0; i--, n >>= 1)
+		ps[i] = (1 & n) + '0';
+    return ps;
+}
+````
+
+```c
+//invert last n bits of a binary int
+int invert_end(int num, int bits)
+{
+    //00000111...111
+    //     |<--n-->|
+    int mask = 0;
+    int bitval = 1;
+    while (bits-- > 0)
+    {
+		mask |= bitval;
+        bitval <<= 1;
+    }
+    return num ^ musk;
+}
+```
 
 ## 流程控制
 
@@ -1059,6 +1137,10 @@ type function_name(type1 var1,type2 var2)
    一个线程对其进行操作时，其他线程不能访问
 
    用于多线程编程
+
+5. `_alignas(type/size)`
+
+   指定一个变量或类型的对齐值
 
 ## C预处理器和C库
 {% endraw %}
