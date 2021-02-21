@@ -462,9 +462,9 @@ prnt.bldfc = 1;
 ```c
 struct {
     unsigned int field1 : 1;
-    unsigned int 		: 2;
+    unsigned int : 2;
     unsigned int field2 : 1;
-    unsigned int 		: 0;
+    unsigned int : 0;
     unsigned int field3 : 1;
 } stuff;
 ```
@@ -474,13 +474,13 @@ struct {
 ```c
 #include<stdbool.h>
 struct box_props {
-    bool opaque				  : 1;
-    unsigned int fill_color   : 3;
-    unsigned int			  : 4;
-    bool show_border		  : 2;
+    bool opaque : 1;
+    unsigned int fill_color : 3;
+    unsigned int : 4;
+    bool show_border : 2;
     unsigned int border_color : 3;
     unsigned int border_style : 2;
-    unsigned int			  : 2;
+    unsigned int : 2;
 }
 ```
 
