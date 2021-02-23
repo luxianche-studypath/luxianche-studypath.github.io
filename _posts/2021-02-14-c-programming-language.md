@@ -484,14 +484,6 @@ struct box_props {
 }
 ```
 
-
-
-
-
-### 高级数据表示
-
-
-
 ## 输入输出
 
 ### 格式化输入输出
@@ -1011,7 +1003,27 @@ type function_name(type1 var1,type2 var2)
   exit(EXIT_FAILURE);
   ```
 
+### 内联函数
 
+具有内部链接的函数可以成为内联函数
+
+应该定义在首次使用它的文件中，相当于函数原型
+
+使用函数说明符`inline`
+
+例：一个常用的清空缓存函数
+
+```c
+inline static falshcache(void)
+{
+    while (getchar() != '\n')
+        continue;
+}
+```
+
+### 函数说明符
+
+函数说明符`_Noreturn`表示函数不会把控制返回主调程序
 
 ## 存储类别
 
@@ -1142,5 +1154,323 @@ type function_name(type1 var1,type2 var2)
 
    指定一个变量或类型的对齐值
 
-## C预处理器和C库
+## C预处理器
+
+### 明示常量
+
+`#define`
+
+```c
+#define 宏 替换体
+```
+
++ 预处理器使用宏等价的替换文本进行替换程序中的宏
++ 嵌套替换
++ 不替换双引号中的宏
+
+```c
+//在类函数宏中使用参数
+#define FUNC(X,Y) (X*Y)
+```
+
++ 原理：对参数直接替换
+
++ 参数名：如果`x`是一个宏形参，`#x`转换为字符串“x”的形参名
+
++ 粘合：粘合运算符`##`把两个记号合成一个记号
+
++ 变参宏：参数为`...`，替换部分为`__VA_ARGS__`， 只能替换最后一个参数
+
+### 文件包含
+
+`#include`
+
++ 包含头文件：
+
+  ```c
+  #include<stdio.h>//在系统标准目录中查找
+  #include"myio.h"//在当前目录或绝对路径中查找
+  ```
+
++ 使用头文件
+
+  1. 明示常量
+  2. 宏函数
+  3. 函数声明
+  4. 结构模板定义
+  5. 类型定义
+  6. 共享变量（在一个源文件中定义，在头文件中引用式声明，包含该头文件的一系列函数可以使用）
+
+### 其他指令
+
++ 取消定义
+
+  `#undef` 取消已经定义的 #define 指令，无法取消定义部分预定义宏
+
++ 条件编译
+
+  `#ifdef` `#else` `#endif` `#ifndef`
+
+  根据标识符是否定义选择编译
+
+  例：用于避免重复包含
+
+  ```c
+  #ifndef NAME_H_
+  	#define NAME_H_
+  	//the content of the head file
+  #endif
+  ```
+
+  `#if` `#elif` `#else` `#endif`
+
+  可使用C的关系运算符和逻辑运算符选择编译
+
+  例：增加可移植性
+
+  ```c
+  #if defined (IBMPC)
+  	#include<ibmpc.h>
+  #elif defined (MAC)
+  	#include<mac.h>
+  #elif defined (WIN)
+  	#include<win.h>
+  #else
+  	#include<general.h>
+  #endif
+  ```
+
++ 重置`__LINE__` 和 `__FILE__` 宏报告的行号和文件名
+
+  ```c
+  #line 10 "filename.c"
+  ```
+
++ 编译时报错`#error`
+
+  ```c
+  #error error message
+  ```
+
++ 修改编译器设置`#pragma`
+
+### 预定义宏
+
+| 宏                 | 含义                                               |
+| ------------------ | -------------------------------------------------- |
+| `__DATE__`         | 预处理日期                                         |
+| `__FILE__`         | 当前源代码文件的文件名的字符串字面量               |
+| `__LINE__`         | 当前源代码文件中行号的整形常量                     |
+| `__STDC__`         | 设置为1时表明事项遵循c标准                         |
+| `__STDC_HOSTED__`  | 本机环境设置为1， 否则设置为0                      |
+| `__STDC_VERSION__` | 支持C99标准设置为199991L，支持C11标准设置为201112L |
+| `__TIME__`         | 翻译代码的时间，格式为“hh:mm:ss”                   |
+
+### 泛型编程
+
+例：检测输入值的类型
+
+```c
+#define MYTYPE(X) _Generic((X),\
+	int: "int",\
+	float: "float",\
+	double: "double",\
+	default: "other",\
+)
+```
+
+例：数学库中的类型变体
+
+```c
+#define SQRT(X) _Generic((X),\
+	long double: sqrtl, \
+	float: sqrtf,\
+	default: sqrt\
+)(X)
+
+#define RAD_TO_DEG (180/(4*atanl(1)))
+
+#define SIN(X) _Generic((X),\
+	long double: sinl((X)/RAD_TO_DEG),\
+	float: sinf((X)/RAD_TO_DEG),\
+	default: sin((X)/RAD_TO_DEG)\
+)
+```
+
+## 常用C库
+
+### 数学库`#include<math.h>`
+
+|           三角函數            |              描述               |
+| :---------------------------: | :-----------------------------: |
+|      double sin(double);      |              正弦               |
+|      double cos(double);      |              余弦               |
+|      double tan(double);      |              正切               |
+|     double asin(double);      |        反正弦（0 ~ pi）         |
+|      double acos(double)      |     反余弦（-pi/2 ~ pi/2）      |
+|     double atan(double);      |     反正切（-pi/2 ~ pi/2）      |
+| double atan2(double, double); | 返回正弦值为y/x的角度（-pi~pi） |
+|     double sinh(double);      |            双曲正弦             |
+|     double cosh(double);      |            双曲余弦             |
+|     double tanh(double);      |            双曲正切             |
+
+|          指数对数           |   描述   |
+| :-------------------------: | :------: |
+|     double exp(double);     | 指数函数 |
+|    double sqrt(double);     | 开平方根 |
+|     double log(double);     | 自然对数 |
+|    double log10(double);    | 常用对数 |
+| double pow(double, double); | x的y次幂 |
+|  float powf(float, float);  | x的y次幂 |
+
+|       取整函數        |  描述  |
+| :-------------------: | :----: |
+| double ceil(double);  | 上取整 |
+| double floor(double); | 下取整 |
+
+|            绝对值            |       描述       |
+| :--------------------------: | :--------------: |
+|        int abs(int);         |  求整型的绝对值  |
+|     double fabs(double);     | 求浮点类型绝对值 |
+| double cabs(struct complex); |  求复数的绝对值  |
+
+|             取余数             |                    描述                    |
+| :----------------------------: | :----------------------------------------: |
+| double modf(double, double *); | 将参数的整数部分通过指针回传，返回小数部分 |
+|  double fmod(double, double);  |            返回两参数相除的余数            |
+
+### 通用工具库`#include<stdlib.h>`
+
+1. `atexit(void (* fp)(void))` `exit()`
+
+   atexit 注册函数，执行exit时按照注册倒序执行
+
+   exit从任意函数退出，并执行清理工作
+
+2. 排序
+
+   ```c
+   void qsort(void *base, size_t nmemb, size_t size,
+              int (*compar)(const void * p1, const void * p2));
+   ```
+
+   + base指向待排序数组首元素
+
+   + 待排序项的数量
+
+   + 待排序元素大小
+
+   + 自定义比较函数
+
+     + p1小于p2返回-1
+
+     + p1等于p2返回0
+
+     + p1大于p2返回1
+
+   例：自定义比较函数，从小到大排序
+
+   ```c
+   int compar(const void *p1, const void *p2)
+   {
+       const double *a1 = (const double *)p1;
+       const double *a2 = (const double *)p1;
+       if (*a1 < *a2)
+           return -1;
+       else if (*a1 == *a2)
+           return 0;
+       else
+           return 1;
+   }
+   ```
+
+   例：自定义比较函数，比较两个名称
+
+   ```c
+   struct name{
+       char first[20];
+       chat last[20];
+   }
+   #include<string.h>
+   int comp(const void *p1, const void *p2)
+   {
+       const struct * a1 = (const struct name)p1;
+       const struct * a2 = (const struct name)p2;
+       int res;
+       res =strcmp(a1->las, a2->last);
+       if (res != 0)
+       	return res;
+       else
+   		return strcmp(a1->first, a2->first)
+   }
+   ```
+
+### 断言库`#include<assert.h>`
+
+断言是为了标识程序中某些条件为真的关键位置，不符合条件调用`abort()`终止程序
+
+```c
+assert(expression);
+```
+
+在引用断言库之前， `#define NDEBUG` 禁用程序中的assert()语句
+
+```
+_Static_assert(expression, "error message")
+```
+
+在预处理时断言一个整形常量
+
+### 拷贝数组 `#include<string.h>`
+
+```c
+void * memcpy(void * restrict s1, const void * restrict s2, size_t n);
+void * memmove(void * s1, const void * s2, size_t n)
+```
+
+拷贝s2指向位置的n个字节到s1，并返回s1的值
+
+使用memcpy应该确保两个数列没有重合位置，memmove使用缓冲区，不用考虑重合
+
+### 可变参数`#include<stdarg.h>`
+
+1. 提供一个使用省略号的函数
+
+   ```c
+   void f1(int n, ...);
+   void f2(...);//没有形参名，无效
+   void f3(int x,double y, ...)
+   void f4(int x, ..., double y);//无效
+   ```
+
+   使用 parmN 表述省略号前的形参，表示参数数量
+
+2. 在函数定义中穿件一个`va_list`类型的变量
+
+3. 用宏`va_start(va_list, parmN)`把该变量初始化成为一个参数列表
+
+4. 用宏`va_arg(va_list, type)`访问参数列表，逐个检索
+
+5. 用宏`va_end(va_list)`完成清理操作
+
++ 用宏`va_copy(va_list,va_list)`复制参数列表
+
+例：多项求和
+
+```c
+#include<stdarg.h>
+double sum(int n, ...)
+{
+    double total = 0；
+    ar_list al;
+    
+    va_start(al, n);
+    for (int i = 0; i < n; i++)
+        total += va_arg(al, double);
+    
+    va_end(al);
+    return total;
+}
+```
+
 {% endraw %}
