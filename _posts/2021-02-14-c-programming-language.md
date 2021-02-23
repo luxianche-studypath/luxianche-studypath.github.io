@@ -658,7 +658,7 @@ char *s_gets(char *st, int n)
    #include<stdio.h>
    
    //文件指针，指向打开的文件，打开失败返回NULL
-   FILE *fp；
+   FILE *fp;
    //fopen打开文件，返回文件指针
    fp = fopen("path/file name","mode")
    ```
@@ -1461,7 +1461,7 @@ void * memmove(void * s1, const void * s2, size_t n)
 #include<stdarg.h>
 double sum(int n, ...)
 {
-    double total = 0；
+    double total = 0;
     ar_list al;
     
     va_start(al, n);
