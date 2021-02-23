@@ -4,6 +4,8 @@ published: true
 categories: note
 ---
 
+*
+
 {% raw %}
 
 ## C语言简介
@@ -61,7 +63,7 @@ Dennis Ritch & Ken Thompson在开发UNIX操作系统时设计了C语言，基于
 
 可移植类型`<stdint.h>` `<inttype.h>`
 
-==查看自己机器中的类型大小==
+*查看自己机器中的类型大小*
 
 ```c
 #include<stdio.h>
@@ -93,7 +95,7 @@ Type char has a size of 1 bytes.
 Type _Bool has a size of 1 bytes.
 ```
 
-==类型转换==
+*类型转换*
 
 涉及两种类型运算，分别转换为更高级
 
@@ -173,11 +175,11 @@ type * ptr;
 
 #### 字符串
 
-==字符串==是以空字符`\0`结尾的char类型数组
+*字符串*是以空字符`\0`结尾的char类型数组
 
 使用双引号`""`括起来的内容被视为指向该字符串储存位置的指针
 
-字符串存储在==静态存储区==, 初始化数组获得字符串的副本, 初始化指针只获得地址
+字符串存储在*静态存储区*, 初始化数组获得字符串的副本, 初始化指针只获得地址
 
 编译器可以使用内存中一个副本来表示所有相同的字符串字面量,建议初始化指针为字符串字面量时使用`const`限定符
 
@@ -462,9 +464,9 @@ prnt.bldfc = 1;
 ```c
 struct {
     unsigned int field1 : 1;
-    unsigned int : 2;
+    unsigned int 		: 2;
     unsigned int field2 : 1;
-    unsigned int : 0;
+    unsigned int 		: 0;
     unsigned int field3 : 1;
 } stuff;
 ```
@@ -474,13 +476,13 @@ struct {
 ```c
 #include<stdbool.h>
 struct box_props {
-    bool opaque : 1;
-    unsigned int fill_color : 3;
-    unsigned int : 4;
-    bool show_border : 2;
+    bool opaque				  : 1;
+    unsigned int fill_color   : 3;
+    unsigned int			  : 4;
+    bool show_border		  : 2;
     unsigned int border_color : 3;
     unsigned int border_style : 2;
-    unsigned int : 2;
+    unsigned int			  : 2;
 }
 ```
 
@@ -555,7 +557,7 @@ struct box_props {
 
 ### 字符输入输出
 
-用户输入字符被收集存储在==缓冲区==中，按下`Enter`程序才可以使用用户输入的字符
+用户输入字符被收集存储在*缓冲区*中，按下`Enter`程序才可以使用用户输入的字符
 
 程序从缓冲区中获取单个字符的函数：
 
@@ -622,7 +624,7 @@ char *s_gets(char *st, int n)
         //checkout the end of the input
         while (st[i] != '\n' && st[i] != '\0')
             i++;
-        if (st[i]=='\n'){
+        if (st[i] == '\n'){
             //input end with a "Enter":
             //replace the '\n' to '\0'
             st[i]='\0';
@@ -787,15 +789,15 @@ char *s_gets(char *st, int n)
 
 ## 语句、运算符、表达式
 
-==语句==是一条完整的计算机指令，简单语句使用一个分号结尾；复合语句使用{花括号}括起
+*语句*是一条完整的计算机指令，简单语句使用一个分号结尾；复合语句使用{花括号}括起
 
-运算对象是==运算符==操作的对象，==表达式==由运算对象和运算符组成，每个表达式都有一个值
+运算对象是*运算符*操作的对象，*表达式*由运算对象和运算符组成，每个表达式都有一个值
 
-表达式的==副作用==是对文件或对象的修改，所有副作用在==序列点==之前发生(；或完整表达式)
+表达式的*副作用*是对文件或对象的修改，所有副作用在*序列点*之前发生(；或完整表达式)
 
 | 赋值运算符 | 含义                                                         |
 | :--------: | ------------------------------------------------------------ |
-|    `=`     | 赋值表达式，==左值==(用于标识或定位存储位置)可用在赋值表达式的左侧 |
+|    `=`     | 赋值表达式，*左值*(用于标识或定位存储位置)可用在赋值表达式的左侧 |
 |    `+=`    | +的增强赋值                                                  |
 |    `-=`    | -的增强赋值                                                  |
 |    `*=`    | *的增强赋值                                                  |
@@ -814,7 +816,7 @@ char *s_gets(char *st, int n)
 |    `<=`    | 小于等于         |
 |    `>`     | 大于             |
 |    `>=`    | 大于等于         |
-|    `==`    | 相等             |
+|    `*`    | 相等             |
 |    `!=`    | 不等             |
 
 | 逻辑运算符 | 含义 |
@@ -931,14 +933,14 @@ label: statement
 
 ## 函数
 
-==函数原型==定义函数参数类型和返回类型, 供编译器使用, 可使用`void`类型表示没有参数或返回类型
+*函数原型*定义函数参数类型和返回类型, 供编译器使用, 可使用`void`类型表示没有参数或返回类型
 
 ```c
 //variable name can be ignored
 type function_name(type1 var1,type2 var2)
 ```
 
-==函数==是完成特定任务的独立程序代码单元
+*函数*是完成特定任务的独立程序代码单元
 
 ````c
 type function_name(type1 var1,type2 var2)
@@ -1039,9 +1041,9 @@ inline static falshcache(void)
   2. 内部链接：只能在一个翻译单元中使用
   3. 无链接
 + 存储期
-  1. 静态存储器，存在于==程序==执行期间
-  2. 线程存储器，存在于==线程==执行期间
-  3. 自动存储器，存在于==块==的执行期间
+  1. 静态存储器，存在于*程序*执行期间
+  2. 线程存储器，存在于*线程*执行期间
+  3. 自动存储器，存在于*块*的执行期间
   4. 动态分配存储器
 
 ### 存储类别
@@ -1068,7 +1070,7 @@ inline static falshcache(void)
 
 3. 块作用域的静态变量
 
-   在==块内==使用关键字`static`声明静态变量
+   在*块内*使用关键字`static`声明静态变量
 
    该变量只在编译时初始化一次
 
@@ -1300,6 +1302,11 @@ inline static falshcache(void)
 ## 常用C库
 
 ### 数学库`#include<math.h>`
+
+```bash
+$gcc source.c -o target.o -lm
+//使用-lm选项链接数学库
+```
 
 |           三角函數            |              描述               |
 | :---------------------------: | :-----------------------------: |
