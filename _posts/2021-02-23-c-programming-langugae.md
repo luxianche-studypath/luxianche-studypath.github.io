@@ -4,8 +4,6 @@ published: true
 categories: note
 ---
 
-*
-
 {% raw %}
 
 ## C语言简介
