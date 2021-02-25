@@ -1467,7 +1467,7 @@ void * memmove(void * s1, const void * s2, size_t n)
 double sum(int n, ...)
 {
     double total = 0;
-    ar_list al;
+    vr_list al;
     
     va_start(al, n);
     for (int i = 0; i < n; i++)
