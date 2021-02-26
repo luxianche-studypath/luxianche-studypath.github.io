@@ -1,7 +1,7 @@
 ---
 title: C programming language
 published: true
-categories: note
+categories: program language
 ---
 
 {% raw %}
