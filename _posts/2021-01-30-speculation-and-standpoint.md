@@ -1,6 +1,6 @@
 ---
 title: 思辨与立场
-published: true
+published: false
 categories: book
 ---
 
